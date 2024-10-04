@@ -1,0 +1,109 @@
+To set up and run your trading bot with Discord integration, follow these detailed steps:
+
+1. Create a Dedicated Wallet:
+Important: Do not use your personal or everyday wallet. Instead, create a dedicated wallet with funds allocated only for trading and associated fees (2% on buys).
+Private Key Security: Keep your private key safe and avoid sharing it or exposing it in your code or with anyone else.
+
+2. Configure .env File:
+In your bot folder, locate or create a .env file. You will need to add your Discord settings, wallet settings, and trading interval. Here’s what you should include:
+
+
+Example:
+# =========================================
+#                Discord Configuration
+# =========================================
+DISCORD_TOKEN=your_discord_bot_token
+DISCORD_CLIENT_ID=your_discord_client_id
+DISCORD_GUILD_ID=your_discord_server_id
+DISCORD_CHANNEL_ID=your_discord_channel_id_for_dashboard_updates
+DISCORD_USER_ID=your_discord_user_id_for_dms_on_trade_execution
+
+# =========================================
+#              Blockchain Configuration
+# =========================================
+ETHEREUM_RPC_URL=https://RPC.vitruveo.xyz
+REST_API_URL=https://explorer-new.vitruveo.xyz/api/v2
+PRIVATE_KEY=your_wallet_private_key        # **Create a new wallet and use it for trading. Do not use your primary wallet. Always practice wallet safety.**
+WALLET_ADDRESS=0xYourWalletAddress         # Derived from the PRIVATE_KEY for balance tracking in the dashboard.
+VITRUVEO_ROUTER_ADDRESS=0x3295fd27D6e44529c51Ef05a5d16Ca17Fb9e10A8
+VITRUVEO_FACTORY_ADDRESS=0x12a3E5Da7F742789F7e8d3E95Cc5E62277dC3372
+
+# =========================================
+#               Token Addresses
+# =========================================
+USDC_ADDRESS=0xbCfB3FCa16b12C7756CD6C24f1cC0AC0E38569CF
+WVTRU_ADDRESS=0x3ccc3F22462cAe34766820894D04a40381201ef9
+
+# =========================================
+#              Trading Configuration
+# =========================================
+# Time interval between trades in milliseconds.
+# Example: 30000 = 30 seconds. Do not set below 30000 to avoid duplicate trades.
+TRADE_INTERVAL=30000
+
+
+3. Discord Setup:
+a. Create a Discord Bot:
+Go to the Discord Developer Portal.
+Click on "New Application", name your bot, and click "Create".
+On the sidebar, click Bot, then Add Bot to generate your bot.
+Copy the Token from this page to use in your .env file.
+b. Set Bot Permissions:
+Go to OAuth2 > URL Generator.
+Select the following scopes:
+bot
+applications.commands (for slash commands)
+Under Bot Permissions, select:
+Send Messages
+Read Message History
+Manage Messages (optional)
+Use Slash Commands
+Copy the Invite URL generated at the bottom of the page. Open this URL in your browser to invite your bot to your server.
+c. Obtain Required IDs:
+Guild (Server) ID: In Discord, enable Developer Mode, right-click your server name, and select "Copy ID".
+Channel ID: Right-click the channel where you want bot updates (e.g., #dashboard-updates), and select "Copy ID".
+User ID: Right-click your username if you want DM notifications from the bot, and select "Copy ID".
+
+4. Update Bot.js File:
+Open your Bot.js file and update the interval settings to check liquidity at your specified intervals.
+Ensure that intervals are also configured in the .env file for consistency.
+
+5. Install Dependencies:
+In the bot folder, run the following command to install required packages:
+
+
+npm install
+
+6. Run the Bot:
+Once dependencies are installed, you can run the bot by executing:
+
+
+node bot.js
+
+Alternatively, if you have a batch file provided, add the directory path to the bot.js in the batch file and run it.
+
+7. Slash Commands Overview:
+Here’s a quick rundown of the available slash commands you can use within Discord:
+
+Dashboard and Trading:
+/dashboard: Displays the trading dashboard.
+/trade: Executes a trade (buy/sell).
+/history: Shows historical transactions.
+/balance: Displays the current wallet balance.
+Conditions:
+/add-buy-condition: Add a buy condition based on percentage drop or price.
+/add-sell-condition: Add a sell condition based on percentage increase or price.
+/remove-buy-condition: Remove a buy condition by ID.
+/remove-sell-condition: Remove a sell condition by ID.
+/list-conditions: Lists all active buy/sell conditions.
+Limit Orders:
+/place-limit-order: Places a limit order to buy or sell at a specific price.
+/cancel-limit-order: Cancels a limit order by its ID.
+/list-limit-orders: Lists all active limit orders.
+
+
+8. Final Checklist:
+Ensure that your bot is invited to your Discord server with all required permissions.
+Check that your .env file contains accurate information.
+Run the bot and monitor its activity in the specified Discord channel.
+This setup will allow you to manage trading operations and conditions via Discord slash commands, making it easy to interact with your trading bot in real-time.
